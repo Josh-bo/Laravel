@@ -1,7 +1,10 @@
 <?php
+// WEB.PHP
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\NoteappController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -19,5 +22,9 @@ Route::get('/', function () {
 });
 
 Route::get('/index', [UserController::class, 'index']);
-Route::post('/register', [UserController::class, 'register']);
+Route::get('/viewNote', [NoteappController::class, 'showNote']);
+Route::get('/displayNote', [NoteappController::class, 'displayNote']);
 
+
+Route::post('/register', [UserController::class, 'register']);
+Route::post('/noteApp_process', [NoteappController::class, 'addNote']);
