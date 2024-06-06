@@ -4,7 +4,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\NoteappController;
-
+use App\Http\Controllers\StudentController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,14 +18,27 @@ use App\Http\Controllers\NoteappController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+// Route::get('/', [UserController::class, 'index']);
+Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 Route::get('/index', [UserController::class, 'index']);
-Route::get('/viewNote', [NoteappController::class, 'showNote']);
+Route::get('/createNote', [NoteappController::class, 'showNote']);
 Route::get('/displayNote', [NoteappController::class, 'displayNote']);
+Route::get('/viewNote/{id}', [NoteappController::class, 'show']);
+Route::get('/displayNote/edit/{id}', [NoteappController::class, 'edit']);
+Route::get('/displayNote/delete/{id}', [NoteappController::class, 'delete']);
 
 
 Route::post('/register', [UserController::class, 'register']);
 Route::post('/noteApp_process', [NoteappController::class, 'addNote']);
+Route::post('/displayNote/edit/{id}', [NoteappController::class, 'update']);
+
+Route::resource('/student', StudentController::class);
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

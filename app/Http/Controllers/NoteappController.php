@@ -37,4 +37,46 @@ class NoteappController extends Controller
             'allNote' => $select
         ]);
     }
+
+    public function show($id)
+    {
+        // $show = DB::table('note')->where('note_id', $id)->get();
+        $show = DB::table('note')->where('note_id', $id)->first();
+        // return $show;
+        return view('Noteapp.viewNote', ['note' => $show]);
+    }
+
+    public function edit($id)
+    {
+        $show = DB::table('note')->where('note_id', $id)->first();
+        return view('Noteapp.edit', ['note' => $show]);
+    }
+
+    public function update(Request $req, $id)
+    {
+        // return $id;
+        $update = DB::table('note')->where('note_id', $id)->update([
+
+            'title' => $req->title,
+            'content' => $req->content
+        ]);
+        // return $update;
+        if ($update) {
+            return redirect("/displayNote");
+        }
+
+        // return view('Noteapp.edit', ['note' => $show]);
+    }
+
+    public function delete($id)
+    {
+        // return $id;
+        $deleted = DB::table('note')->where('note_id', $id)->delete();
+        // return $update;
+        if ($deleted) {
+            return redirect("/displayNote");
+        }
+
+        // return view('Noteapp.edit', ['note' => $show]);
+    }
 }

@@ -17,7 +17,7 @@
             </div>
 
             <div class="mx-auto text-end justify-content-end mt-2">
-                <a href="/viewNote">Create Note</a>
+                <a href="/createNote">Create Note</a>
                 <a href="/displayNote">Display Note</a>
                 <a href="">Home Page</a>
 
