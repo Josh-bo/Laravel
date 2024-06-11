@@ -14,10 +14,10 @@
                     </th>
                     {{-- <th>
                         CONTENT
-                    </th>
+                    </th>--}}
                     <th>
-                        DATE
-                    </th> --}}
+                        IMAGES
+                    </th>
                     <th>
                         BUTTON
                     </th>
@@ -26,6 +26,9 @@
                 <tr>
                     <td>{{$note->note_id}}</td>
                     <td>{{$note->title}}</td>
+                    <td class="mt-3">
+                        <img src="/images/{{$note->user_img}}" alt="image" style="height: 30px; border-radius:50%;  width:30px">
+                    </td>
                     {{-- <td>{{$note->content}}</td> --}}
                     {{-- <td>{{$note->createdAt}}</td> --}}
                     <td class="d-flex gap-4 mx-auto justify-content-center">

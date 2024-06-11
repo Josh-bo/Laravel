@@ -4,6 +4,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class NoteappController extends Controller
@@ -15,23 +16,34 @@ class NoteappController extends Controller
 
     public function addNote(Request $req)
     {
-        $insert = DB::table('note')->insert([
-            'title' => $req->title,
-            'content' => $req->content,
-        ]);
+        // dd($req);
+        $newName = time() . $req->image->getClientOriginalName();
+        // return $newName;
+        $move = $req->image->move(public_path('images/'), $newName);
+        if ($move) {
+            // return "Moved successfully";
+            $insert = DB::table('note')->insert([
+                'title' => $req->title,
+                'content' => $req->content,
+                'user_id' => Auth::user()->id,
+                'user_img' => $newName,
+            ]);
 
-        if ($insert) {
-            return redirect('/displayNote');
+            if ($insert) {
+                return redirect('/displayNote');
+            } else {
+                return ("Error Occurred");
+            }
+            return ('Processing');
+            return ($req->content);
         } else {
-            return ("Error Occurred");
+            return "Moving failed";
         }
-        // return ('Processing');
-        // return ($req->content);
     }
 
     public function displayNote()
     {
-        $select = DB::table('note')->get();
+        $select = DB::table('note')->where('user_id', Auth::user()->id)->get();
         // return ($select);
         return view('Noteapp.displayNote', [
             'allNote' => $select
@@ -58,7 +70,7 @@ class NoteappController extends Controller
         $update = DB::table('note')->where('note_id', $id)->update([
 
             'title' => $req->title,
-            'content' => $req->content
+            'content' => $req->content,
         ]);
         // return $update;
         if ($update) {
